@@ -3,6 +3,7 @@ import axios from "axios";
 import Swal from "sweetalert2";
 import SearchBar from "../components/SearchBar";
 import SearchResults from "../components/SearchResults";
+import CuisineFilter from "../components/CuisineFilter";
 
 function RecipeSearch() {
 	// Default input to display on page load
@@ -18,9 +19,14 @@ function RecipeSearch() {
 		setUserInput(userInput);
 	};
 
+	const getSelectedCuisine = (selectedCuisine) => {
+		setSelectedCuisine(selectedCuisine);
+		console.log(selectedCuisine);
+	};
+
 	// Retrieve search results from user search
 	useEffect(() => {
-		const apiKey = "a5d48136f25e4a60b14f9aab5114675e";
+		const apiKey = "3b686c6034dd41399f2555f0e367afd0";
 		const apiUrl = "https://api.spoonacular.com/recipes/complexSearch";
 
 		if (userInput !== "") {
@@ -80,8 +86,12 @@ function RecipeSearch() {
 	// }, [selectedCuisine]);
 
 	return (
-		<section>
-			<SearchBar getUserInput={getUserInput} />
+		<section className="RecipeSearch">
+			<h2>What do you feel like cooking?</h2>
+			<article className="RecipeSearchBar">
+				<SearchBar getUserInput={getUserInput} />
+			</article>
+			<CuisineFilter getSelectedCuisine={getSelectedCuisine} />
 			<SearchResults recipesArray={recipesArray} />
 		</section>
 	);

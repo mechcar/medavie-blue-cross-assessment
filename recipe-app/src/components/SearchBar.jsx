@@ -14,8 +14,7 @@ const SearchBar = (props) => {
 	};
 
 	return (
-		<div className="searchBar">
-			<h2> What do you feel like cooking ? </h2>
+		<section className="searchBar">
 			<form action="submit" onSubmit={handleSubmit}>
 				<label className="sr-only" htmlFor="SearchInput"></label>
 				<input
@@ -30,7 +29,7 @@ const SearchBar = (props) => {
 				/>
 				<input className="SearchBarBtn" type="submit" value="Search" />
 			</form>
-		</div>
+		</section>
 	);
 };
 

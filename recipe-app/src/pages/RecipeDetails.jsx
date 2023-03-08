@@ -12,7 +12,7 @@ const RecipeDetails = () => {
 	// Retrieve search results from user search
 	useEffect(() => {
 		const recipeID = state.recipeObj.id;
-		const apiKey = "a5d48136f25e4a60b14f9aab5114675e";
+		const apiKey = "3b686c6034dd41399f2555f0e367afd0";
 		const apiUrl = `https://api.spoonacular.com/recipes/${recipeID}/information?includeNutrition=false`;
 
 		axios({
