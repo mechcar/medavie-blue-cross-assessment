@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-const RecipeSearchBar = (props) => {
+const SearchBar = (props) => {
 	const [userInput, setUserInput] = useState("");
 
 	const handleChange = (e) => {
@@ -14,28 +14,24 @@ const RecipeSearchBar = (props) => {
 	};
 
 	return (
-		<div className="recipeSearchBar">
-			<h2> What do you feel like cooking?</h2>
+		<div className="searchBar">
+			<h2> What do you feel like cooking ? </h2>
 			<form action="submit" onSubmit={handleSubmit}>
-				<label className="sr-only" htmlFor="recipeSearchInput"></label>
+				<label className="sr-only" htmlFor="SearchInput"></label>
 				<input
 					type="text"
-					id="recipeSearchInput"
-					className="recipeSearchInput"
-					placeholder="Recipe Title..."
+					id="SearchInput"
+					className="SearchInput"
+					placeholder="Recipe..."
 					onChange={handleChange}
 					autoComplete="off"
 					value={userInput}
 					required
 				/>
-				<input
-					className="recipeSearchBarBtn"
-					type="submit"
-					value="Search"
-				/>
+				<input className="SearchBarBtn" type="submit" value="Search" />
 			</form>
 		</div>
 	);
 };
 
-export default RecipeSearchBar;
+export default SearchBar;
