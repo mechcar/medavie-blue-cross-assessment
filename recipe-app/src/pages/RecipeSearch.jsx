@@ -54,16 +54,16 @@ function RecipeSearch() {
 					// Sweet Alert error handling message
 					let message = "No recipe results!";
 					Swal.fire({
-						background: "#242424",
+						background: "#b7b868",
 						icon: "warning",
-						iconColor: "#e50914",
+						iconColor: "#000",
 						confirmButtonText: "OK",
-						confirmButtonColor: "#e50914",
+						confirmButtonColor: "#000",
 						allowEnterKey: true,
 						allowEscapeKey: true,
 						html:
 							// Change title to suit the application
-							"<section><h2 style='color:white;margin-bottom: 20px'>Error!</h2><p style='color:white'>" +
+							"<section><h2 style='color:#000;margin-bottom: 20px'>Error!</h2><p style='color:#000'>" +
 							message +
 							"</p></section>",
 					});
@@ -110,7 +110,7 @@ function RecipeSearch() {
 
 	return (
 		<section className="RecipeSearch">
-            <h1>Recipe App - Josh Carson</h1>
+			<h1>Recipe App - Josh Carson</h1>
 			<h2>What do you feel like cooking?</h2>
 			<section className="RecipeSearchInputs">
 				<SearchBar getUserInput={getUserInput} />

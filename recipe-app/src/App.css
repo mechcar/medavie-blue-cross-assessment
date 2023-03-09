@@ -212,10 +212,9 @@ a {
 	gap: 3.2rem;
 }
 
-.healthInformationList,
-.ingredientsList {
-	padding: 0;
+.healthInformationList {
 	list-style-type: none;
+	padding: 0;
 }
 
 .healthInformation h3 {
@@ -238,7 +237,12 @@ a {
 	color: red;
 }
 
-.ingredientsList,
+.ingredientsList {
+	padding-top: 1rem;
+	padding-bottom: 1rem;
+	background-color: #fff;
+}
+
 .cookingInstructions article {
 	background-color: #fff;
 	padding: 1rem;

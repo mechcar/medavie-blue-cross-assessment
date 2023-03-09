@@ -1,10 +1,8 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import supportedCuisines from "../data/supportedCuisines";
-import axios from "axios";
 
 const CuisineFilter = (props) => {
 	const [selectedCuisine, setSelectedCuisine] = useState("");
-	const [recipesArray, setRecipesArray] = useState([]);
 	const handleChange = (e) => {
 		setSelectedCuisine(e.target.value);
 		props.getSelectedCuisine(e.target.value);
@@ -12,7 +10,7 @@ const CuisineFilter = (props) => {
 
 	return (
 		<article className="CuisineFilter">
-			<label>Filter by Cuisine:</label>	
+			<label>Filter by Cuisine:</label>
 			<select
 				value={selectedCuisine}
 				name="cusineOption"
