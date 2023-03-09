@@ -4,6 +4,7 @@ import Swal from "sweetalert2";
 import SearchBar from "../components/SearchBar";
 import SearchResults from "../components/SearchResults";
 import CuisineFilter from "../components/CuisineFilter";
+import Pagination from "../components/Pagination";
 
 function RecipeSearch() {
 	// Default input to display on page load
@@ -15,16 +16,24 @@ function RecipeSearch() {
 	// Store recipe data retrieved from API
 	const [recipesArray, setRecipesArray] = useState([]);
 
+	// Track current page number
+	const [currentPage, setCurrentPage] = useState(1);
+	// Manage number of items per page
+	const [recipesPerPage, setRecipesPerPage] = useState(5);
+	// Track current recipes being displayed
+	const [currentRecipes, setCurrentRecipes] = useState([]);
+
+	// Retrieve user input from SearchBar component
 	const getUserInput = (userInput) => {
 		setUserInput(userInput);
 	};
 
+	// Retrieve selected cuisine value from CuisineFilter component
 	const getSelectedCuisine = (selectedCuisine) => {
 		setSelectedCuisine(selectedCuisine);
-		console.log(selectedCuisine);
 	};
 
-	// Retrieve search results from user search
+	// Call Spoonacular API when user searches for a recipe
 	useEffect(() => {
 		const apiKey = "3b686c6034dd41399f2555f0e367afd0";
 		const apiUrl = "https://api.spoonacular.com/recipes/complexSearch";
@@ -42,9 +51,8 @@ function RecipeSearch() {
 			}).then((res) => {
 				if (res.data.results.length === 0) {
 					setUserInput("");
-					// Change text to suit the response needed
-					let message =
-						"Couldn't find that movie. Please try another title!";
+					// Sweet Alert error handling message
+					let message = "No recipe results!";
 					Swal.fire({
 						background: "#242424",
 						icon: "warning",
@@ -55,44 +63,65 @@ function RecipeSearch() {
 						allowEscapeKey: true,
 						html:
 							// Change title to suit the application
-							"<div><h2 style='color:white;margin-bottom: 20px'>Error!</h2><p style='color:white'>" +
+							"<section><h2 style='color:white;margin-bottom: 20px'>Error!</h2><p style='color:white'>" +
 							message +
-							"</p></div>",
+							"</p></section>",
 					});
 				} else {
 					setRecipesArray(res.data.results);
 				}
 			});
 		}
+		// Fire upon submission of user input in search bar
 	}, [userInput]);
 
-	// // Retrieve search results from user selected cuisine
-	// useEffect(() => {
-	// 	const apiKey = "a5d48136f25e4a60b14f9aab5114675e";
-	// 	const apiUrl = "https://api.spoonacular.com/recipes/";
+	// Call Spoonacular API when cusine selection changes
+	useEffect(() => {
+		const apiKey = "3b686c6034dd41399f2555f0e367afd0";
+		const apiUrl = "https://api.spoonacular.com/recipes/complexSearch";
 
-	// 	axios({
-	// 		url: apiUrl,
-	// 		method: "GET",
-	// 		dataResponse: "json",
-	// 		params: {
-	// 			format: "json",
-	// 			apiKey: apiKey,
-	// 			query: selectedCuisine,
-	// 		},
-	// 	}).then((res) => {
-	// 		setRecipesArray(res.data.results);
-	// 	});
-	// }, [selectedCuisine]);
+		axios({
+			url: apiUrl,
+			method: "GET",
+			dataResponse: "json",
+			params: {
+				format: "json",
+				apiKey: apiKey,
+				query: selectedCuisine,
+			},
+		}).then((res) => {
+			setRecipesArray(res.data.results);
+		});
+		// Fire upon each change to the value of selected Cuisine
+	}, [selectedCuisine]);
+
+	// Set current recipes for pagination
+	useEffect(() => {
+		const indexOfLastRecipe = currentPage * recipesPerPage;
+		const indexOfFirstRecipe = indexOfLastRecipe - recipesPerPage;
+
+		setCurrentRecipes(
+			recipesArray.slice(indexOfFirstRecipe, indexOfLastRecipe)
+		);
+	}, [currentPage, recipesPerPage, recipesArray]);
+
+	// Change page on click
+	const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
 	return (
 		<section className="RecipeSearch">
+            <h1>Recipe App - Josh Carson</h1>
 			<h2>What do you feel like cooking?</h2>
-			<article className="RecipeSearchBar">
+			<section className="RecipeSearchInputs">
 				<SearchBar getUserInput={getUserInput} />
-			</article>
-			<CuisineFilter getSelectedCuisine={getSelectedCuisine} />
-			<SearchResults recipesArray={recipesArray} />
+				<CuisineFilter getSelectedCuisine={getSelectedCuisine} />
+			</section>
+			<SearchResults recipesArray={currentRecipes} />
+			<Pagination
+				recipesPerPage={recipesPerPage}
+				totalRecipes={recipesArray.length}
+				paginate={paginate}
+			/>
 		</section>
 	);
 }

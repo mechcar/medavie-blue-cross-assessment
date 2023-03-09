@@ -1,7 +1,8 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import { ReactPaginate } from "react-paginate";
 
-const SearchResults = (props) => {
+const SearchResults = (props, recipes) => {
 	const [selectedRecipe, setSelectedRecipe] = useState("");
 
 	useEffect(() => {
@@ -9,7 +10,7 @@ const SearchResults = (props) => {
 	}, [props]);
 
 	return (
-		<section className="searchResults">
+		<section className="RecipeSearchResults">
 			{props.recipesArray.map((recipeObj) => {
 				return (
 					<Link
@@ -18,7 +19,7 @@ const SearchResults = (props) => {
 						id={recipeObj.id}
 						key={recipeObj.id}
 					>
-						<article className="recipeContainer">
+						<article className="RecipeSearchResult">
 							<img src={recipeObj.image} alt={recipeObj.title} />
 							<h3>{recipeObj.title}</h3>
 						</article>

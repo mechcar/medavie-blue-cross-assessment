@@ -1,5 +1,6 @@
 import { useLocation } from "react-router-dom";
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import axios from "axios";
 
 const RecipeDetails = () => {
@@ -24,25 +25,62 @@ const RecipeDetails = () => {
 				apiKey: apiKey,
 			},
 		}).then((res) => {
-			setRecipeDetails(res.data);
+			setTimeout(() => {
+				setRecipeDetails(res.data);
+			}, 1500);
 		});
-	}, []);
-
-	console.log(recipeDetails);
+	}, [state.recipeObj.id]);
 
 	return (
-		<section>
+		<section className="RecipeDetails">
+			<Link to="/" className="backLink">
+				Go back
+			</Link>
 			<h1>{recipeDetails.title}</h1>
-			<img src={recipeDetails.image} alt={recipeDetails.title} />
-			<article className="healthInformation">
-				<h3>Health Information</h3>
-				<ul className="healthInformationList">
-					{recipeDetails.dairyFree ? <li>Dairy-Free</li> : ""}
-					{recipeDetails.glutenFree ? <li>Gluten-Free</li> : ""}
-					{recipeDetails.vegetarian ? <li>Vegatarian</li> : ""}
-					{recipeDetails.vegan ? <li>Vegan</li> : ""}
-				</ul>
-			</article>
+			<section className="RecipeDetailsTopRow">
+				<article className="healthInformation">
+					<h3>Health Information</h3>
+					<ul className="healthInformationList">
+						{recipeDetails.dairyFree ? (
+							<li>
+								Dairy-Free: <span className="check">✓</span>
+							</li>
+						) : (
+							<li>
+								Dairy-Free: <span className="cross">✖</span>
+							</li>
+						)}
+						{recipeDetails.glutenFree ? (
+							<li>
+								Gluten-Free: <span className="check">✓</span>
+							</li>
+						) : (
+							<li>
+								Gluten-Free: <span className="cross">✖</span>
+							</li>
+						)}
+						{recipeDetails.vegetarian ? (
+							<li>
+								Vegatarian: <span className="check">✓</span>
+							</li>
+						) : (
+							<li>
+								Vegetarian: <span className="cross">✖</span>
+							</li>
+						)}
+						{recipeDetails.vegan ? (
+							<li>
+								Vegan: <span className="check">✓</span>
+							</li>
+						) : (
+							<li>
+								Vegan: <span className="cross">✖</span>
+							</li>
+						)}
+					</ul>
+				</article>
+				<img src={recipeDetails.image} alt={recipeDetails.title} />
+			</section>
 			<article className="ingredients">
 				<h3>Ingredients</h3>
 				<ul className="ingredientsList">
